@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.juanvictordev.vuttrapi.entity.Tools;
 import com.juanvictordev.vuttrapi.service.ToolsService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class ToolsController {
@@ -25,8 +27,11 @@ public class ToolsController {
     return ResponseEntity.ok().body(toolsService.allTools());
   }
   
-  //getFilterTools
-
+  @GetMapping("/tools")
+  public ResponseEntity<List<Tools>> getFilterTools(@RequestParam String tag){
+    return ResponseEntity.ok().body(toolsService.filterTool(tag));
+  }
+  
   @PostMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Tools> postTool(@RequestBody ToolDto requestBody) {
        

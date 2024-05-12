@@ -50,4 +50,9 @@ public class ToolsService {
   public List<Tools> allTools(){
     return toolsRepository.findAll();
   }
+
+  public List<Tools> filterTool(String tag){
+    return toolsRepository.findByTagName(tag);
+  }
+
 }
