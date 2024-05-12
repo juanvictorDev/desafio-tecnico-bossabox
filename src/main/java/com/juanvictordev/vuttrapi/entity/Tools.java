@@ -3,6 +3,7 @@ package com.juanvictordev.vuttrapi.entity;
 import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +18,7 @@ public class Tools {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  int tool_id;
+  Integer tool_id;
 
   @Column(nullable = false)
   String title;
@@ -28,11 +29,11 @@ public class Tools {
   @Column(nullable = false)
   String description;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name="tool_tag", 
     joinColumns = @JoinColumn(name="tool_id", referencedColumnName="tool_id"),
-    inverseJoinColumns = @JoinColumn(name="tag_id", referencedColumnName="tag_name")
+    inverseJoinColumns = @JoinColumn(name="tag_name", referencedColumnName="tag_name")
   )
   Set<Tags> tags;
   

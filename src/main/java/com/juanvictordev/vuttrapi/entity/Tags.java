@@ -12,6 +12,7 @@ public class Tags {
   @Id
   String tag_name;
 
+  
   // CONSTRUTORES
   public Tags() {
   }
