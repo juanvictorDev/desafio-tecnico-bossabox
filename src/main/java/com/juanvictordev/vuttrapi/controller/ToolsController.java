@@ -3,7 +3,6 @@ package com.juanvictordev.vuttrapi.controller;
 import org.springframework.web.bind.annotation.RestController;
 import com.juanvictordev.vuttrapi.dto.ToolDto;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +19,20 @@ public class ToolsController {
   
   @Autowired
   ToolsService toolsService;
-
-  @GetMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<Tools>> getAllTools() {
-    
-    return ResponseEntity.ok().body(toolsService.allTools());
-  }
   
-  @GetMapping("/tools")
-  public ResponseEntity<List<Tools>> getFilterTools(@RequestParam String tag){
-    return ResponseEntity.ok().body(toolsService.filterTool(tag));
+  @GetMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Tools>> getAllToolsOrFilterTools(@RequestParam(defaultValue = "all") String tag){
+    if(tag.equals("all")){
+      return ResponseEntity.ok().body(toolsService.allTools());
+    }else{
+      return ResponseEntity.ok().body(toolsService.filterTool(tag));
+    }
   }
   
   @PostMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Tools> postTool(@RequestBody ToolDto requestBody) {
-       
     return ResponseEntity.status(201).body(toolsService.createTool(requestBody));
   }
+
   
 }
