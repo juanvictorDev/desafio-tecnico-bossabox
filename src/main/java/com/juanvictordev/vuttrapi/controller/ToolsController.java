@@ -21,8 +21,8 @@ public class ToolsController {
   ToolsService toolsService;
   
   @GetMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<Tools>> getAllToolsOrFilterTools(@RequestParam(defaultValue = "all") String tag){
-    if(tag.equals("all")){
+  public ResponseEntity<List<Tools>> getAllToolsOrFilterTools(@RequestParam(defaultValue = "all_tags") String tag){
+    if(tag.equals("all_tags")){
       return ResponseEntity.ok().body(toolsService.allTools());
     }else{
       return ResponseEntity.ok().body(toolsService.filterTool(tag));
