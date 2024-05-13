@@ -2,9 +2,9 @@ package com.juanvictordev.vuttrapi.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import com.juanvictordev.vuttrapi.dto.ToolDto;
-import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +25,16 @@ public class ToolsController {
   ToolsService toolsService;
   
   @GetMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<Tools>> getAllToolsOrFilterTools(@RequestParam(defaultValue = "all_tags") String tag){
+  public ResponseEntity<Map<String, Object>> getAllToolsOrFilterTools(
+      @RequestParam(defaultValue = "all_tags") String tag,
+      @RequestParam(defaultValue = "0") Integer  pageNumber,
+      @RequestParam(defaultValue = "5") Integer  size
+    ){
     if(tag.equals("all_tags")){
-      return ResponseEntity.ok().body(toolsService.allTools());
-    }else{
-      return ResponseEntity.ok().body(toolsService.filterTool(tag));
+      return ResponseEntity.ok().body(toolsService.allTools(PageRequest.of(pageNumber, size)));
+    }
+    else{
+      return ResponseEntity.ok().body(toolsService.filterTool(tag, PageRequest.of(pageNumber, size)));
     }
   }
   

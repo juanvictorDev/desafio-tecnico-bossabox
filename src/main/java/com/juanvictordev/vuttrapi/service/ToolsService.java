@@ -1,11 +1,13 @@
 package com.juanvictordev.vuttrapi.service;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.juanvictordev.vuttrapi.dto.ToolDto;
@@ -49,12 +51,14 @@ public class ToolsService {
     return toolsRepository.save(tools);
   }
 
-  public List<Tools> allTools(){
-    return toolsRepository.findAll();
+  public Map<String, Object> allTools(Pageable pageable){
+    Page<Tools> tools = toolsRepository.findAll(pageable);
+    return pageResponse(tools);
   }
 
-  public List<Tools> filterTool(String tag){
-    return toolsRepository.findByTagName(tag);
+  public Map<String, Object> filterTool(String tag, Pageable pageable){
+    Page<Tools> filterTools = toolsRepository.findByTagName(tag, pageable);
+    return pageResponse(filterTools);
   }
 
   public ResponseEntity<Map<String, String>> deleteTool(Integer id){
@@ -69,4 +73,13 @@ public class ToolsService {
     }
   }
 
+  private Map<String, Object> pageResponse(Page<Tools> page){
+    Map<String, Object> response = new HashMap<>();
+    response.put("tools", page.getContent());
+    response.put("current-page", page.getNumber());
+    response.put("total-pages", page.getTotalPages());
+    response.put("total-items", page.getTotalElements());
+
+    return response;
+  }
 }

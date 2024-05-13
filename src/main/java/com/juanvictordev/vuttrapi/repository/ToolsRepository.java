@@ -1,6 +1,7 @@
 package com.juanvictordev.vuttrapi.repository;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +16,5 @@ public interface ToolsRepository extends JpaRepository<Tools, Integer>{
     "WHERE tool_tag.tag_name = :tag",
     nativeQuery = true
   )
-  List<Tools> findByTagName(@Param("tag") String tag);
+  Page<Tools> findByTagName(@Param("tag") String tag, Pageable pageable);
 }
