@@ -15,7 +15,9 @@ public class GlobalExceptionHandler {
   
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
-  
+    
+    //CRIANDO UMA NOVA RESPOSTA PERSONALIZADA PARA ERRO NO BEAN VALIDATION 
+
     List<ErrorBeanValidationDto> fields = new ArrayList<>();
 
     ex.getBindingResult().getFieldErrors().forEach(error -> {

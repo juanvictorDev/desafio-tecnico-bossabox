@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 @Table(name = "tags")
 public class Tags {
   
+  //COLUNA
   @Id
   String tag_name;
 

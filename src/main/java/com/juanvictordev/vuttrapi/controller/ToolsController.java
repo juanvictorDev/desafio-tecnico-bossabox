@@ -24,6 +24,7 @@ public class ToolsController {
   @Autowired
   ToolsService toolsService;
   
+  //ENDPOINT DUPLO QUE FAZ UM SELECT DIFERENTE DE ACORDO COM O VALOR DA TAG PASSADA NO PARAMETRO DA URL
   @GetMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Object>> getAllToolsOrFilterTools(
       @RequestParam(defaultValue = "all_tags") String tag,
@@ -37,12 +38,14 @@ public class ToolsController {
       return ResponseEntity.ok().body(toolsService.filterTool(tag, PageRequest.of(pageNumber, size)));
     }
   }
-  
+
+  //ENDPOINT PARA CRIAR TOOL
   @PostMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Tools> postTool(@Valid @RequestBody ToolDto requestBody) {
     return ResponseEntity.status(201).body(toolsService.createTool(requestBody));
   }
-
+  
+  //ENDPOINT PARA DELETAR TOOL
   @DeleteMapping("tools/{id}")
   public ResponseEntity<Map<String, String>> deleteTool(@PathVariable Integer id){
     return toolsService.deleteTool(id);

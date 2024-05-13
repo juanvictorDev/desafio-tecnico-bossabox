@@ -9,6 +9,8 @@ import com.juanvictordev.vuttrapi.entity.Tools;
 
 public interface ToolsRepository extends JpaRepository<Tools, Integer>{
   
+  // METODO COM QUERY PERSONALIZADA, PARA TRAZER TODAS AS TOOLS QUE
+  // POSSUEM UMA DETERMINADA TAG 
   @Query(value = 
     "SELECT tools.* " +
     "FROM tools INNER JOIN tool_tag " +

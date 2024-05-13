@@ -26,8 +26,10 @@ public class ToolsService {
   @Autowired
   TagsRepository tagsRepository;
 
+  //METODO PARA CRIAR UMA TOOL
   public Tools createTool(ToolDto toolDto){
 
+    //VERIFICACAO SE A TAG EXISTE, SE NAO EXISTIR CRIAR
     toolDto.tags().forEach(tag -> {
       Optional<Tags> tagFromDb = tagsRepository.findById(tag);
 
@@ -36,6 +38,7 @@ public class ToolsService {
       }
     });
 
+    //PASSANDO OS DADOS DO DTO PARA O TIPO TOOL
     Set<Tags> tags = new HashSet<>();
     toolDto.tags().forEach(tag -> {
       tags.add(new Tags(tag));
@@ -51,16 +54,19 @@ public class ToolsService {
     return toolsRepository.save(tools);
   }
 
+  //METODO PARA BUSCAR TODAS AS TOOLS 
   public Map<String, Object> allTools(Pageable pageable){
     Page<Tools> tools = toolsRepository.findAll(pageable);
     return pageResponse(tools);
   }
 
+  //METODO PARA BUSCAR TODAS AS TOOLS PELA TAG
   public Map<String, Object> filterTool(String tag, Pageable pageable){
     Page<Tools> filterTools = toolsRepository.findByTagName(tag, pageable);
     return pageResponse(filterTools);
   }
 
+  //METODO PARA DELETAR TOOL
   public ResponseEntity<Map<String, String>> deleteTool(Integer id){
 
     Optional<Tools> tool = toolsRepository.findById(id);
@@ -73,6 +79,7 @@ public class ToolsService {
     }
   }
 
+  //METODO UTILITARIO PARA RESPOSTA DE PAGE PERSONALIZADA 
   private Map<String, Object> pageResponse(Page<Tools> page){
     Map<String, Object> response = new HashMap<>();
     response.put("tools", page.getContent());

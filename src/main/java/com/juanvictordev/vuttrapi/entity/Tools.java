@@ -15,7 +15,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tools")
 public class Tools {
-
+  
+  //COLUNAS
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Integer tool_id;
