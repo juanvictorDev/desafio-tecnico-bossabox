@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,10 +37,21 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<Map<String, Object>> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex){
+    
     Map<String, Object> erro = new HashMap<>();
     erro.put("error", 400);
     erro.put("message", ex.getMessage());
     erro.put("local", ex.getPropertyName());
+
+    return ResponseEntity.badRequest().body(erro);
+  }
+
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public ResponseEntity<Map<String, Object>> handleDataIntegrityViolation(DataIntegrityViolationException ex){
+    
+    Map<String, Object> erro = new HashMap<>();
+    erro.put("error", 400);
+    erro.put("message", ex.getMessage());
 
     return ResponseEntity.badRequest().body(erro);
   }
