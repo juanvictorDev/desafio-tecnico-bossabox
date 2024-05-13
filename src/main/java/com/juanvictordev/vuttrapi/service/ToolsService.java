@@ -2,9 +2,11 @@ package com.juanvictordev.vuttrapi.service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.juanvictordev.vuttrapi.dto.ToolDto;
 import com.juanvictordev.vuttrapi.entity.Tags;
@@ -23,7 +25,7 @@ public class ToolsService {
   TagsRepository tagsRepository;
 
   public Tools createTool(ToolDto toolDto){
-    
+
     toolDto.tags().forEach(tag -> {
       Optional<Tags> tagFromDb = tagsRepository.findById(tag);
 
@@ -53,6 +55,18 @@ public class ToolsService {
 
   public List<Tools> filterTool(String tag){
     return toolsRepository.findByTagName(tag);
+  }
+
+  public ResponseEntity<Map<String, String>> deleteTool(Integer id){
+
+    Optional<Tools> tool = toolsRepository.findById(id);
+    
+    if(tool.isPresent()){
+      toolsRepository.deleteById(id);
+      return ResponseEntity.ok(Map.of("msg", "tool com o ID: " + String.valueOf(id) + " excluido"));
+    }else{
+      return ResponseEntity.badRequest().body(Map.of("msg", "ID nao existe"));
+    }
   }
 
 }
