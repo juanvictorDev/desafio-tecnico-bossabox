@@ -2,5 +2,12 @@ package com.juanvictordev.vuttrapi.dto;
 
 import java.util.Set;
 
-public record ToolDto(String title, String link, String description, Set<String> tags) {
-}
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
+public record ToolDto(
+  @NotBlank String title,
+  @NotBlank String link,
+  @NotBlank String description, 
+  @NotEmpty Set<String> tags
+) {}

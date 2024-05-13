@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.juanvictordev.vuttrapi.entity.Tools;
 import com.juanvictordev.vuttrapi.service.ToolsService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -33,7 +34,7 @@ public class ToolsController {
   }
   
   @PostMapping(value = "/tools", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Tools> postTool(@RequestBody ToolDto requestBody) {
+  public ResponseEntity<Tools> postTool(@Valid @RequestBody ToolDto requestBody) {
     return ResponseEntity.status(201).body(toolsService.createTool(requestBody));
   }
 
