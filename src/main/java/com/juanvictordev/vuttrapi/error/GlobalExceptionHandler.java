@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
 import com.juanvictordev.vuttrapi.dto.ErrorBeanValidationDto;
 
 
@@ -55,4 +53,15 @@ public class GlobalExceptionHandler {
 
     return ResponseEntity.badRequest().body(erro);
   }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex){
+    
+    Map<String, Object> erro = new HashMap<>();
+    erro.put("error", 400);
+    erro.put("message", ex.getMessage());
+
+    return ResponseEntity.badRequest().body(erro);
+  }
+
 }
