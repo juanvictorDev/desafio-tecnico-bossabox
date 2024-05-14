@@ -31,7 +31,7 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
   }
   
-  //CONTROLLER PARA LOGAR USER
+  //CONTROLLER PARA LOGAR USER E RETORNAR UM TOKEN JWT
   @PostMapping("/login")
   public ResponseEntity<Map<String, String>> postLogin(@Valid @RequestBody LoginDto requestBody) {
     

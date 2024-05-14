@@ -6,7 +6,7 @@ import java.util.Optional;
 
 
 public interface UserRepository extends JpaRepository<User, Integer>{
-  
+  //QUERY USADA PARA PROCESSSO DE AUTENTICACAO PADRAO NO USERDETAILSSERVICE
   Optional<User> findByEmail(String email);
 
 }

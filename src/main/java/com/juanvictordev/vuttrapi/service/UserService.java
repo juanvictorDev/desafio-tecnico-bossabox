@@ -41,8 +41,10 @@ public class UserService {
   //METODO PARA REGISTRAR USUARIO
   public User registerUser(CreateUserDto createUserDto){
 
+    //VERIFICA SE A ROLE PASSADA NO REQUESTBOY EXISTE NO BANCO
     Optional<Roles> role = roleRepository.findByName(RoleValue.valueOf(createUserDto.role()));
     
+    //SE EXISTIR, APLICAR NO NOVO USER
     if(role.isPresent()){
       Set<Roles> setRole = new HashSet<>();
       setRole.add(role.get());

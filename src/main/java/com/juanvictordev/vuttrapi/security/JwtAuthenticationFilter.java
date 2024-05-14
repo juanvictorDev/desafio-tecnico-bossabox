@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
+//FILTRO QUE SERA APLICADO ANTES DE CADA REQUISICAO PARA VALIDAR O TOKEN
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
